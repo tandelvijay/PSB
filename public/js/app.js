@@ -1849,6 +1849,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 
 
@@ -1865,13 +1867,31 @@ __webpack_require__(/*! ../main */ "./resources/js/main.js");
         title: '',
         description: ''
       },
-      clientList: ''
+      clientList: [],
+      lists: [],
+      search: ''
     };
   },
   created: function created() {
     this.showLoader = true;
     this.getClientList();
   },
+
+  /*watch:{
+   searchQuery(){
+    if( this.searchQuery.length>0) {
+   this.clientList = this.lists.filter((client) => {
+   return Object.keys(client).some((client) => {
+   let test123 = String(client[key]);
+   return string.toLowerCase().indexOf(this.searchQuery().toLowerCase()) > -1
+   })
+   })
+   } else {
+   this.client=this.lists
+    }
+    }
+    }
+   },*/
   methods: {
     // get the list of all clients
     getClientList: function getClientList() {
@@ -1963,6 +1983,15 @@ __webpack_require__(/*! ../main */ "./resources/js/main.js");
         description: ''
       };
       $('#modelClient').modal('show');
+    }
+  },
+  computed: {
+    filteredItems: function filteredItems() {
+      var _this4 = this;
+
+      return this.clientList.filter(function (client) {
+        return client.title.indexOf(_this4.search.toLowerCase()) > -1;
+      });
     }
   }
 });
@@ -42443,7 +42472,7 @@ var render = function() {
     { staticClass: "container" },
     [
       _c("div", [
-        _c("div", [
+        _c("div", { staticClass: "float-left" }, [
           _c(
             "a",
             {
@@ -42464,11 +42493,36 @@ var render = function() {
           )
         ]),
         _vm._v(" "),
+        _c("div", { staticClass: "float-lg-right" }, [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.search,
+                expression: "search"
+              }
+            ],
+            attrs: { type: "text", placeholder: "Search" },
+            domProps: { value: _vm.search },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.search = $event.target.value
+              }
+            }
+          })
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "clearfix" }),
+        _vm._v(" "),
         _c("div", { staticClass: "client-list mt-3" }, [
           _c(
             "div",
             { staticClass: "row" },
-            _vm._l(_vm.clientList, function(client, key) {
+            _vm._l(_vm.filteredItems, function(client) {
               return _c("div", { staticClass: "col-md-4" }, [
                 _c("div", { staticClass: "card mb-3" }, [
                   _c("div", { staticClass: "card-body" }, [
@@ -42532,7 +42586,7 @@ var render = function() {
                               href: "#",
                               "data-action": "deleteClient",
                               title:
-                                "Delete this briefcase and all of its presentations"
+                                "Delete this Clients and all of its presentations"
                             },
                             on: {
                               click: function($event) {
@@ -42549,7 +42603,26 @@ var render = function() {
                     _vm._v(" "),
                     _c("em", [_vm._v(_vm._s(client.description))]),
                     _vm._v(" "),
-                    _vm._m(0, true)
+                    _vm._m(0, true),
+                    _vm._v(" "),
+                    _c(
+                      "small",
+                      {
+                        staticClass: "left",
+                        staticStyle: { float: "left", "padding-left": "15px" }
+                      },
+                      [
+                        _vm._v("\n                                Created  "),
+                        _c("strong", [_vm._v(_vm._s(client.created_at))])
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c("small", { staticClass: "middle" }),
+                    _vm._v(" "),
+                    _c("small", { staticClass: "right" }, [
+                      _vm._v("\n                                Updated  "),
+                      _c("strong", [_vm._v(_vm._s(client.updated_at))])
+                    ])
                   ])
                 ])
               ])
