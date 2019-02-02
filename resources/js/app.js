@@ -21,6 +21,7 @@ window.Axios = require('axios');
 
 Vue.component('home-component', require('./components/HomeComponent.vue').default);
 Vue.component('loading', require('./components/shared/Loading.vue').default);
+Vue.component('presentation-component', require('./components/PresentationComponent.vue').default);
 
 const app = new Vue({
     el: '#app'

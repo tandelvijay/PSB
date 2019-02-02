@@ -2,47 +2,27 @@
     <div class="container">
         <div>
             <div class="float-left">
-                <a href="#" class="btn btn-primary" role="button">Visit the Vault</a>
-                <a href="#" class="btn btn-success" @click="openCreateClientModal">New Client</a>
+                <a href="#" class="btn btn-primary" role="button">Back to Client</a>
             </div>
             <div class="float-lg-right">
                 <input type="text" placeholder="Search" v-model="search">
             </div>
             <div class="clearfix"></div>
 
-            <div class="client-list mt-3">
+            <div class="client-list mt-5">
                 <div class="row">
-                    <div class="col-md-4" v-for="client in filteredItems">
+                    <div class="col-md-4">
                         <div class="card mb-3">
                             <div class="card-body">
                                 <div class="float-left">
-                                    <h2 class="butt" style="font-size: 19px; color: #4567a4;">{{ client.title }}</h2>
+                                    <h2 class="butt" style="font-size: 19px; color: #4567a4;">Client Name</h2>
                                 </div>
                                 <div class="float-right">
-                                    <button type="button" class="btn btn-primary btn-sm" title="Change the name or description of this Client" @click="editClient(client)">Edit</button>
-                                    <button type="button" class="btn btn-danger btn-sm" title="Delete this Clients and all of its presentations" @click="deleteClient(client.id)">Delete</button>
-                                   <!-- <a href="#" data-action="editClient" title="Change the name or description of this Client" @click="editClient(client)">Edit</a>-->
-                                    <!--<a href="#" data-action="deleteClient" title="Delete this Clients and all of its presentations" @click="deleteClient(client.id)">Delete</a>-->
+                                    <button type="button" class="btn btn-primary btn-sm" title="Change the name or description of this Client">Edit</button>
+                                    <button type="button" class="btn btn-danger btn-sm" title="Delete this Clients and all of its presentations">Delete</button>
                                 </div>
                                 <div class="clearfix"></div>
-                                <!--<span class="links" style="position: absolute; top: 27px;right: 15px;color: #aec1cb;text-shadow: 0px 1px 0px white;font-family: 'AvenirLT-Medium';text-transform: uppercase;font-size: 1em;">
-
-                                 </span>-->
                                 <hr>
-                                <div>
-                                   <h4>{{ client.description }}</h4>
-                                </div>
-                                <div class="buttons" style="width: 210px;margin: 0 auto;">
-                                    <a href="#" class="btn btn-round" style="background-color: #fc6300;border-radius: 30px; width: 100%; margin-bottom: 10px;"  data-action="newPresentation" @click="openCreatePresentationModal(client)"><b>New Presentation</b></a><br>
-                                    <a href="#" class="btn btn-primary" style="border-radius: 30px; width: 100%; margin-bottom: 10px;" data-action="showPresentations">
-                                        <b>Show Presentations</b>
-                                    </a>
-                                </div>
-                                <div class="mt-1">
-                                    <div class="float-left" style="font-size: 12px;">Created:  <span>{{ client.created_at |  moment("MM.DD.YYYY") }}</span></div>
-                                    <div class="float-right" style="font-size: 12px;">Updated:  <span>{{ client.updated_at |  moment("MM.DD.YYYY") }}</span></div>
-                                    <div class="clearfix"></div>
-                                </div>
                             </div>
                         </div>
 
@@ -50,79 +30,31 @@
                 </div>
             </div>
         </div>
+        <div class="client-list mt-5">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <div class="text-body">
+                                <a href="" class="mr-2">EDIT</a>
+                                <a href="" class="mr-2">COPY</a>
+                                <a href="" class="mr-2">MOVE</a>
+                                <a href="" class="mr-2">SHARE</a>
+                                <a href="" class="mr-2">DELETE</a>
+                            </div>
 
-        <div class="modal" id="modelClient">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <form v-on:submit.prevent="createClient" id="clientForm" class="form-horizontal">
-                        <!-- Modal Header -->
-                        <div class="modal-header">
-                            <h4 class="modal-title">Add New Client</h4>
-                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        </div>
+                            <div class="clearfix"></div>
+                            <hr>
+                            <div class="text-body">
+                                <span>Here Message display</span>
+                            </div>
+                                <hr>
+                            <div class="text-body">
+                                <button type="submit" class="btn btn-success">Save</button>
+                            </div>
 
-                        <!-- Modal body -->
-                        <div class="modal-body">
-                            <div class="box-body">
-                                <div class="form-group">
-                                    <label for="formGroupExampleInput">Title</label>
-                                    <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Enter Title" v-model="formData.title">
-                                </div>
-                            </div>
-                            <div class="box-body">
-                                <div class="form-group">
-                                    <label for="exampleFormControlTextarea1">Description</label>
-                                    <input type="text" class="form-control" id="exampleFormControlTextarea1" placeholder="Enter Description" v-model="formData.description">
-                                </div>
-                            </div>
                         </div>
-                        <!-- Modal footer -->
-                        <div class="modal-footer">
-                            <button type="submit" class="btn btn-success">Save</button>
-                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-
-        <div class="modal" id="modelPresentation">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <form v-on:submit.prevent="createPresentation" id="presentationForm" class="form-horizontal">
-                        <!-- Modal Header -->
-                        <div class="modal-header">
-                            <h4 class="modal-title">{{ clientName }}</h4>
-                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        </div>
-
-                        <!-- Modal body -->
-                        <div class="modal-body">
-                            <div class="box-body">
-                                <div class="form-group">
-                                    <label for="presentationTitle">Title</label>
-                                    <input type="text" class="form-control" id="presentationTitle" placeholder="Enter Title" v-model="presentationFormData.title">
-                                </div>
-                            </div>
-                            <div class="box-body">
-                                <div class="form-group">
-                                    <label for="presentationDescription">Description</label>
-                                    <input type="text" class="form-control" id="presentationDescription" placeholder="Enter Description" v-model="presentationFormData.description">
-                                </div>
-                            </div>
-                            <div class="box-body">
-                                <div class="form-check">
-                                    <input type="checkbox" class="form-check-input" id="salesPresentation" v-model="presentationFormData.is_sales_presentation">
-                                    <label class="form-check-label" for="salesPresentation"> Is this a Sales Presentation? </label>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Modal footer -->
-                        <div class="modal-footer">
-                            <button type="submit" class="btn btn-success">Save</button>
-                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                        </div>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>
@@ -138,7 +70,7 @@
 
     require('../main');
     export default {
-        name: "HomeComponent",
+        name: "PresentationComponent",
         data: function(){
             return {
                 showLoader: false,
@@ -256,8 +188,7 @@
                 if (response.data.success) {
                     notify.methods.notifySuccess(response.data.message);
                     $('#modelPresentation').modal('hide');
-                    window.location = common.data().serverPath + 'getClientPresentations/client_id';
-//                    this.getClientList();
+                    this.getClientList();
                 } else {
                     if (response.data.error.statusCode === 103) {
                         notify.methods.notifyError(response.data.error.errorDescription);
